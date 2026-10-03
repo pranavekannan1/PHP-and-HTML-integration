@@ -1,10 +1,15 @@
 <?php
 
 $name = $_POST["name"];
+if ($name == "") {
+    echo "Name is required";
+} else {
+    echo "Hello, " . $name;
+}
+
 $email = $_POST["email"];
 $message = $_POST["message"];
 
-echo "Name: " . $name;
 echo "<br>";
 
 echo "Email: " . $email;
