@@ -7,14 +7,19 @@ if ($name == "") {
     echo "Hello, " . $name;
 }
 
+echo "<br>";
 $email = $_POST["email"];
+if ($email == "") {
+    echo "Email is required";
+} else {
+    echo "Email: " . $email;
+}
+echo "<br>";
+
 $message = $_POST["message"];
-
-echo "<br>";
-
-echo "Email: " . $email;
-echo "<br>";
-
-echo "Message: " . $message;
-
+if ($message == "") {
+    echo "Message is required";
+} else {
+    echo "Message: " . $message;
+}           
 ?>
