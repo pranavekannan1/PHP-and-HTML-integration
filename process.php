@@ -46,7 +46,7 @@ if ($name == "") {
             echo "Contact saved successfully";
 
         } else {
-
+//shows that contact is not saved
             echo "Failed to save contact";
 
         }
