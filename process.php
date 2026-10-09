@@ -1,37 +1,61 @@
 <?php
-// makes it to PHP file
+
+// Load the database connection
 require "db.php";
-// check data is empty or not
+
+// Get form data and remove extra spaces
 $name = trim($_POST["name"] ?? "");
 $email = trim($_POST["email"] ?? "");
 $message = trim($_POST["message"] ?? "");
-// if data is empty then show error
+
+// Check if the name is empty
 if ($name == "") {
 
     echo "Name is required";
-// if data is empty then show error
+
+// Check if the email is empty
 } elseif ($email == "") {
 
     echo "Email is required";
-// if data is empty then show error
+
+// Check if the email format is valid
 } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
     echo "Invalid email address";
-// if data is empty then show error
+
 } else {
-// to make it real database add the database to use it
+
+    // Prepare the SQL statement
     $stmt = $connection->prepare(
         "INSERT INTO contacts (name, email, message) VALUES (?, ?, ?)"
     );
-// binds the parameters to the statement
-    $stmt->bind_param("sss", $name, $email, $message);
-// executes the statement
-    $stmt->execute();
-// shows success message
-    echo "Contact saved successfully";
-// close the statement
-    $stmt->close();
-// close the connection
+
+    // Check if the SQL statement was prepared successfully
+    if (!$stmt) {
+
+        echo "Failed to prepare database statement";
+
+    } else {
+
+        // Bind the form values to the SQL statement
+        $stmt->bind_param("sss", $name, $email, $message);
+
+        // Execute the SQL statement
+        if ($stmt->execute()) {
+
+            echo "Contact saved successfully";
+
+        } else {
+//shows that contact is not saved
+            echo "Failed to save contact";
+
+        }
+
+        // Close the prepared statement
+        $stmt->close();
+    }
+
+    // Close the database connection
     $connection->close();
 }
 
